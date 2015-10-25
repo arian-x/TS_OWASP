@@ -41,7 +41,7 @@ app.post('/safe/injection',function(req,res) {
 });
 // A2
 app.post('/login',function(req,res){
-	if(req.body.user == "user" and req.body.pass == "1234"){
+	if(req.body.user == "user" && req.body.pass == "1234"){
 		var temp = {header:true,sessionId:fakeCookie[req.body.user]};
 		res.json(temp);
 	}
@@ -56,12 +56,13 @@ app.get('/user',function(req,res){
 	});
 });
 
+
 //cmd=while(1){console.log(%22HACKED%22)}
 app.get('/nodejsInjection',function(req,res){
 	console.log(req.query['cmd']);
 	eval(req.query['cmd']);
 });
-app.get()
+//app.get()
 app.get('/xss/*',function(req,res){
 	var urlArray = req.url.split("/xss");
 	var fileName = urlArray[urlArray.length - 1 ];
