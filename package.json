@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "crypto": "0.0.3",
     "csrf": "^3.0.0",
     "csurf": "^1.8.3",
     "express": "^4.13.3",

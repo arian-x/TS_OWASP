@@ -1,6 +1,8 @@
 var express    = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var cryptoKey =  "a_secure_key_for_crypto_here";
+var cryptoAlgo = "aes256";
 var HOST = 'localhost';
 var PORT = 3306;
 var mysql      = require('mysql');
@@ -35,6 +37,22 @@ app.use(session({
 // app.use(helmet.noCache());
 // app.use(helmet.csp());
 // app.use(helmet.hsts());
+
+
+
+//A6 - Sensitive Data Exposure
+// Helper function to encrypt data
+var crypto = require("crypto");
+var encrypt = function(toEncrypt) {
+	var cipher = crypto.createCipher(cryptoAlgo,cryptoKey);
+	return cipher.update(toEncrypt, "utf8", "hex") + cipher.final("hex");
+};
+// Helper function to decrypt data
+var decrypt = function(toDecrypt) {
+	var decipher = crypto.createDecipher(cryptoAlgo,cryptoKey);
+    return decipher.update(toDecrypt, "hex", "utf8") + decipher.final("utf8");
+};
+
 
 //app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
