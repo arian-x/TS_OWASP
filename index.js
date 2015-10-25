@@ -9,8 +9,8 @@ var path = require('path');
 var jade = require('jade');
 var csrf = require('csurf');
 var app = express();
-
-var fakeCookie = {'user':123456};
+var cookieJar = {};
+var fakeCookie = {'arian':123456};
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded());
 var session = require('express-session');
@@ -19,7 +19,7 @@ app.use(session({
   secret: 'our super secret session secret',
   cookie: {
     maxAge: 3600000,
-    httpOnly: true
+   	httpOnly: true 
   }
 }));
 
@@ -42,31 +42,59 @@ app.get('/usecsrf',function(req,res){
 });
 app.post('/injection', function (req, res) {
 	var user = req.body.user;
-	var pass = req.body.pass;
+	var pass = req.body.email;
   //var user = connection.escape(req.body.user);
   //var pass = connection.escape(req.body.pass);
   console.log("user: ",user);
-  console.log("pass: ",pass);
-  var sql  = "SELECT * FROM users WHERE user = '" + user + "' AND pass = '" + pass + "'";
+  console.log("pass: ",email);
+  var sql  = "SELECT * FROM users WHERE username = '" + user + "' AND pass = '" + email + "'";
   connection.query(sql, function(err, results) {
   	console.log(results);
   });
 
 });
+app.get('/getEmail',function(req,res){
+
+
+	//console.log("hey its here: ",req.session);
+	//req.session.user = "arian";	
+	console.log(req.session); 
+	var user = connection.escape(req.query['user']);
+	console.log("user: ",user);
+	var sql = "SELECT * FROM users WHERE username = "+ user;
+	connection.query(sql, function(err, results) {
+  		console.log(results);
+  		res.json(results);
+  	});
+	//console.log(req.cookie);
+	//res.writeHead(200,{'Set-Cookie':'sthsthsth'});
+	//res.end('Hello World\n');
+
+});
+app.get('/safe/getEmail',function(req,res){
+	var user = connection.escape(req.session.user)
+	console.log("user: ",user);
+	var sql = "SELECT * FROM users WHERE username = "+ user;
+	connection.query(sql, function(err, results) {
+  		console.log(results);
+  		res.json(results);
+  	});
+});
 app.post('/safe/injection',function(req,res) {
 	var user = connection.escape(req.body.user);
-	var pass = connection.escape(req.body.pass);
+	var email = connection.escape(req.body.email);
 	console.log("user: ",user);
-	console.log("pass: ",pass);
-	var sql  = "SELECT * FROM users WHERE user = '" + user + "' AND pass = '" + pass + "'";
+	console.log("email: ",email);
+	var sql  = "SELECT * FROM users WHERE username = '" + user + "' AND email = '" + pass + "'";
 	connection.query(sql, function(err, results) {
 		console.log(results);
 	});
 });
 // A2
 app.post('/login',function(req,res){
-	if(req.body.user == "user" && req.body.pass == "1234"){
+	if(req.body.user == "arian" && req.body.pass == "1234"){
 		var temp = {status:true,sessionId:fakeCookie[req.body.user]};
+		req.session.user = "arian";	
 		res.json(temp);
 	}else{
 		var temp = {status:false};
@@ -100,9 +128,9 @@ app.get('/comment',function(req,res){
 	});
 })
 app.post('/safe/comment',function(req,res){
-	var comment = req.body.comment;
-	comment = connection.escape(comment);
-	var sql = "INSERT INTO comments VALUES ('"+comment+"');"
+	var comment = connection.escape(req.body.comment);
+	console.log("safe comment is: ",comment)
+	var sql = "INSERT INTO comments VALUES ("+comment+")";
 	connection.query(sql, function(err, results) {
 		if (err) throw err;
 		console.log(results);
@@ -122,6 +150,7 @@ app.get('/xss/*',function(req,res){
 	//res.render('error', { name: fileName });
 });
 app.get('/',function(req,res){
+	
     res.sendFile("index.html"); 
     //var html = jade.renderFile('index.jade',{});
 		//res.send(html);
