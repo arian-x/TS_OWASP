@@ -98,8 +98,8 @@ app.get('/getEmail',function(req,res){
   		console.log(results);
   		res.json(results);
   	});
-	
 });
+
 app.get('/safe/getEmail',function(req,res){
 	var user = connection.escape(req.session.user)
 	console.log("user: ",user);
@@ -155,7 +155,7 @@ app.get('/comment',function(req,res){
 		console.log(results);
 		res.json(results);
 	});
-})
+}) ;
 app.post('/safe/comment',function(req,res){
 	var firstComment = req.body.comment;
 	var comment = htmlEscape(firstComment);

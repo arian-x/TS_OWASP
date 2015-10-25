@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
     var url  ="/" ;
-    var id = "" ; 
+    var id = "" ;
+    var user = "arian" ;
 
     var $isSafe = $("#isSafe") ;
 
@@ -28,11 +29,13 @@ $(document).ready(function () {
     var $password = $("#password") ;
     var $loginBtn = $("#loginBtn") ;
 
+    var $mail = $("#email") ;
+    var $safeMail = $("#safeEmail") ;
+
     var $tsAlert = $("#tsAlert") ;
 
     $loginBtn.click(function () {
         $.post(url + "login" , { user : $userName.val() , pass : $password.val() }).done(function (data, status) {
-            console.log(data , status ) ;
             id = data.sessionId ;
             $link.html("show user info : " + url + "user?id=" + id ) ;
             $link.removeClass('hide') ;
@@ -49,7 +52,7 @@ $(document).ready(function () {
         })
     } ;
 
-    $link.click(function(){
+    $link.click(function() {
         $.get(url + "user?id=" + id , function (data) {
             console.log(data) ; 
             $("#info").html(JSON.stringify(data)) ; 
@@ -65,9 +68,21 @@ $(document).ready(function () {
                 $tsAlert.addClass('show').html('Attack Detected ! ') ;
                 setTimeout(function () {
                     $tsAlert.removeClass('show')
-                } , 3000 ) ; 
+                } , 3000 ) ;
             }
             renderComments();
+        })
+    }) ;
+
+    $mail.click(function () {
+        $.get('/getEmail?user=' + user  , function (data) {
+            $("#mailInfo").html(JSON.stringify(data)) ;
+        })
+    }) ;
+
+    $safeMail.click(function () {
+        $.get("/safe/getEmail?user=" + user , function (data) {
+            $("#mailInfo").html(JSON.stringify(data)) ;
         })
     }) ;
 
