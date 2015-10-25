@@ -1,17 +1,21 @@
-div.menu {
-    padding: 15px ;
-    margin-bottom: 15px ;
-    text-align: center;
-    font-size: 32px ;
+#tsAlert {
+
+    z-index: 100 ;
+    width: 40% ;
+    position: absolute;
+    top : -20px ;
+    right: 30px ;
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -ms-transition: all .25s ease;
+    -o-transition: all .25s ease;
+    transition: all .25s ease;
+    opacity: 0 ;
 
 }
 
-div.menu > span {
-    margin: 20px  ;
-
-}
-
-div.menu span.active {
-    border-bottom: 1px solid crimson;
+#tsAlert.show {
+    opacity: 1 ;
+    top : 20px ;
 
 }

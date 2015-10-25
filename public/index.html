@@ -3,11 +3,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title> TS Project - OWASP </title>
 
-    <link rel="stylesheet" href="bower_components/bootflat/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/bootflat/css/bootflat.css">
-    <link rel="stylesheet" href="bower_components/bootflat/css/bootflat-extensions.css">
-    <link rel="stylesheet" href="bower_components/bootflat/css/bootflat-square.css">
-    <link rel="stylesheet" href="bower_components/bootflat/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/Bootflat/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/Bootflat/bootflat/css/bootflat.css">
     <link rel="stylesheet" href="style.css">
 
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -15,6 +12,8 @@
 </head>
 
 <body>
+<div class="alert alert-danger" id="tsAlert"> Fuck You - <span class="alert-close"> </span> </div>
+
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -23,82 +22,43 @@
         </div>
     </div>
 </nav>
+
 <div class="container">
+    <p> Safe : <input type="checkbox" id="isSafe"> </p>
     <div class="jumbotron">
-        <h3> Login </h3>
-        <div class="form-group">
-            <label>
-                Username
-            </label>
-            <input id="username" type="text" class="form-control">
-        </div>
-        <div class="form-group">
-            <label> Password </label>
-            <input id="password" type="password" class="form-control">
-        </div>
-        <div class="form-group">
-            <button id="loginBtn" class="btn btn-success"> Login </button>
+        <div class="container">
+            <h3> Login </h3>
+            <div class="form-group">
+                <label>
+                    Username
+                </label>
+                <input id="username" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label> Password </label>
+                <input id="password" type="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <button id="loginBtn" class="btn btn-success"> Login </button>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col col-sm-6">
             <div class="panel panel-danger">
                 <div class="panel panel-heading">
-                    Table Name
+                    Comment Table
                 </div>
                 <div class="panel panel-body">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th> Name</th>
-                            <th> Name</th>
-                            <th> Name</th>
-                            <th> Name</th>
-                            <th> Name</th>
+                            <th> Commnet </th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="comments">
                         <tr>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                        </tr>
-                        <tr>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                        </tr>
-                        <tr>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                        </tr>
-                        <tr>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                        </tr>
-                        <tr>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                        </tr>
-                        <tr>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
-                            <td> Kian</td>
+                            <td> Some Comment  </td>
                         </tr>
                         </tbody>
                     </table>
@@ -120,21 +80,26 @@
                     <p id="searchStatus"> You Searched for : -- </p>
                     <hr>
                     <div class="form-group">
-                        <label> Name </label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label> Name </label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label> Name </label>
+                        <label> Comment </label>
                         <input type="text" class="form-control">
                     </div>
                     <div class="form-group">
                         <button class="btn btn-success"> Add Row</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col col-sm-6">
+            <div class="jumbotron" style="height: 300px">
+                <h5> Attackers Site </h5>
+            </div>
+        </div>
+        <div class="col col-sm-6">
+            <div class="jumbotron" style="height: 300px">
+                <h5> Victim Site </h5>
             </div>
         </div>
     </div>
