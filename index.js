@@ -32,7 +32,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
 //owasp #1 sql injection
-
+function htmlEscape(text) {
+   return text.replace(/&/g, '&amp;').
+     replace(/</g, '&lt;').  // it's not neccessary to escape >
+     replace(/"/g, '&quot;').
+     replace(/'/g, '&#039;');
+}
 app.get('/usecsrf',function(req,res){
 	app.use(csrf());
 	app.use(function(req, res, next) {
@@ -56,8 +61,8 @@ app.post('/injection', function (req, res) {
 app.get('/getEmail',function(req,res){
 
 
-	//console.log("hey its here: ",req.session);
-	//req.session.user = "arian";	
+	
+	
 	console.log(req.session); 
 	var user = connection.escape(req.query['user']);
 	console.log("user: ",user);
@@ -66,10 +71,7 @@ app.get('/getEmail',function(req,res){
   		console.log(results);
   		res.json(results);
   	});
-	//console.log(req.cookie);
-	//res.writeHead(200,{'Set-Cookie':'sthsthsth'});
-	//res.end('Hello World\n');
-
+	
 });
 app.get('/safe/getEmail',function(req,res){
 	var user = connection.escape(req.session.user)
@@ -128,7 +130,8 @@ app.get('/comment',function(req,res){
 	});
 })
 app.post('/safe/comment',function(req,res){
-	var comment = connection.escape(req.body.comment);
+	var comment = htmlEscape(req.body.comment);
+	comment = connection.escape(comment);
 	console.log("safe comment is: ",comment)
 	var sql = "INSERT INTO comments VALUES ("+comment+")";
 	connection.query(sql, function(err, results) {
