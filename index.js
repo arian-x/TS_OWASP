@@ -14,7 +14,7 @@ var fakeCookie = {'user':123456};
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded());
 var session = require('express-session');
-
+var csrfEnabled = false;
 app.use(session({
   secret: 'our super secret session secret',
   cookie: {
@@ -82,9 +82,9 @@ app.get('/user',function(req,res){
 		};
 	});
 });
-app.post('/commet',function(req,res){
-	var comment = req.body.user;
-	var sql = "INSERT INTO comments VALUES ("+comment+");"
+app.post('/comment',function(req,res){
+	var comment = req.body.comment;
+	var sql = "INSERT INTO comments VALUES ('"+comment+"')"
 	connection.query(sql, function(err, results) {
 		if (err) throw err;
 		console.log(results);
@@ -100,8 +100,9 @@ app.get('/comment',function(req,res){
 	});
 })
 app.post('/safe/comment',function(req,res){
-	var comment = req.body.user;
-	var sql = "INSERT INTO comments VALUES ("+comment+");"
+	var comment = req.body.comment;
+	//TODO sanitize request
+	var sql = "INSERT INTO comments VALUES ('"+comment+"');"
 	connection.query(sql, function(err, results) {
 		if (err) throw err;
 		console.log(results);

@@ -42,6 +42,8 @@
                 <button id="loginBtn" class="btn btn-success"> Login </button>
             </div>
         </div>
+        <span id="link" class="hide badge badge-success"> Show User Info </span>
+        <p id="info"> User Info </p>
     </div>
     <div class="row">
         <div class="col col-sm-6">
@@ -74,18 +76,21 @@
                             <input id="searchField" type="text" class="form-control">
                         </div>
                         <div class="form-group">
-                            <button id="searchBtn" class="btn btn-primary"> Search</button>
+                            <button id="searchBtn" class="btn btn-primary"> Search </button>
+                            <span class="badge badge-danger"> Presistante </span>
                         </div>
                     </div>
                     <p id="searchStatus"> You Searched for : -- </p>
                     <hr>
                     <div class="form-group">
                         <label> Comment </label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="commentBody">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-success"> Add Row</button>
+                        <button id="addComment" class="btn btn-success"> Add Row</button>
+                        <span class="badge badge-danger"> Non Presistante </span>
                     </div>
+
                 </div>
             </div>
         </div>
