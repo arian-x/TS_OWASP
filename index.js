@@ -22,7 +22,7 @@ app.use(session({
     httpOnly: true
   }
 }));
-app.use(csrf());
+
 //secure: true,
 //TO DO: CSRF,cookie http only,comment presistant injection
 // test safe/comment
@@ -32,6 +32,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
 //owasp #1 sql injection
+
+app.get('/usecsrf',function(req,res){
+	app.use(csrf());
+	app.use(function(req, res, next) {
+  		res.locals._csrf = req.csrfToken();
+  		next();
+	}); 
+});
 app.post('/injection', function (req, res) {
 	var user = req.body.user;
 	var pass = req.body.pass;
@@ -58,7 +66,10 @@ app.post('/safe/injection',function(req,res) {
 // A2
 app.post('/login',function(req,res){
 	if(req.body.user == "user" && req.body.pass == "1234"){
-		var temp = {header:true,sessionId:fakeCookie[req.body.user]};
+		var temp = {status:true,sessionId:fakeCookie[req.body.user]};
+		res.json(temp);
+	}else{
+		var temp = {status:false};
 		res.json(temp);
 	}
 });
