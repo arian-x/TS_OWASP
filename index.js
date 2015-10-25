@@ -161,7 +161,10 @@ app.post('/safe/comment',function(req,res){
 	var comment = htmlEscape(firstComment);
 	var flag = true
 	if (firstComment != comment){
-		res.json({'status':flag});
+		res.json({'status': false});
+	}
+	else {
+		res.json({status : true}) ;
 	}
 	//comment = connection.escape(comment);
 	console.log("safe comment is: ",comment)

@@ -31,12 +31,12 @@ $(document).ready(function () {
     var $tsAlert = $("#tsAlert") ;
 
     $loginBtn.click(function () {
-        $.post(url + "login" , { user : $userName.val() , pass : $password.val() } , function (data) {
-            console.log(data) ;
-            id = data.sessionId ; 
-            $link.html("show user info : " + url + "user?id=" + id )
-            $link.removeClass('hide') ; 
-        }) ;
+        $.post(url + "login" , { user : $userName.val() , pass : $password.val() }).done(function (data, status) {
+            console.log(data , status ) ;
+            id = data.sessionId ;
+            $link.html("show user info : " + url + "user?id=" + id ) ;
+            $link.removeClass('hide') ;
+        });
     }) ;
 
     var renderComments = function () {
@@ -54,14 +54,22 @@ $(document).ready(function () {
             console.log(data) ; 
             $("#info").html(JSON.stringify(data)) ; 
         })
-    })
+    }) ;
    
     $addComment.click(function () {
-        $.post(url + "comment" , { comment : $commentBody.val() } , function (data) {
-            console.log(data) ;
+        $.post(url + "comment" , { comment : $commentBody.val() } , function (data , status , x ) {
+            if ( data.status ) {
+
+            }
+            else {
+                $tsAlert.addClass('show').html('Attack Detected ! ') ;
+                setTimeout(function () {
+                    $tsAlert.removeClass('show')
+                } , 3000 ) ; 
+            }
             renderComments();
         })
-    })
+    }) ;
 
     renderComments() ;
 
