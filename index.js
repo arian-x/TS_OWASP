@@ -23,9 +23,18 @@ app.use(session({
   }
 }));
 
-//secure: true,
-//TO DO: CSRF,cookie http only,comment presistant injection
-// test safe/comment
+
+// A5 - Security MisConfig
+//var helmet = require("helmet");
+// Prevent opening page in frame or iframe to protect from clickjacking
+// Prevents browser from caching and storing page
+// Allow loading resources only from white-listed domains
+// Allow communication only on HTTPS
+// app.disable("x-powered-by");
+// app.use(helmet.xframe());
+// app.use(helmet.noCache());
+// app.use(helmet.csp());
+// app.use(helmet.hsts());
 
 //app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -130,15 +139,20 @@ app.get('/comment',function(req,res){
 	});
 })
 app.post('/safe/comment',function(req,res){
-	var comment = htmlEscape(req.body.comment);
-	comment = connection.escape(comment);
+	var firstComment = req.body.comment;
+	var comment = htmlEscape(firstComment);
+	var flag = true
+	if (firstComment != comment){
+		res.json({'status':flag});
+	}
+	//comment = connection.escape(comment);
 	console.log("safe comment is: ",comment)
-	var sql = "INSERT INTO comments VALUES ("+comment+")";
-	connection.query(sql, function(err, results) {
-		if (err) throw err;
-		console.log(results);
-		res.json(results);
-	});
+	//var sql = "INSERT INTO comments VALUES ("+comment+")";
+	//connection.query(sql, function(err, results) {
+	//	if (err) throw err;
+	//	console.log(results);
+	//	res.json(results);
+	//});
 });
 
 //cmd=while(1){console.log(%22HACKED%22)}
