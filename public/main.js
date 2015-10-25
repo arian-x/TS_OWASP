@@ -40,7 +40,7 @@ $(document).ready(function () {
     }) ;
 
     var renderComments = function () {
-        $.get(url + "comment" , function (data) {
+        $.get("/comment" , function (data) {
             console.log(data) ;
             $comments.empty() ; 
             for ( var i = 0 ; i < data.length ; i++ ) {
