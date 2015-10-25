@@ -101,7 +101,7 @@ app.get('/comment',function(req,res){
 })
 app.post('/safe/comment',function(req,res){
 	var comment = req.body.comment;
-	//TODO sanitize request
+	comment = connection.escape(comment);
 	var sql = "INSERT INTO comments VALUES ('"+comment+"');"
 	connection.query(sql, function(err, results) {
 		if (err) throw err;
