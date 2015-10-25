@@ -1,3 +1,5 @@
-/**
- * Created by Kian on 10/25/15.
- */
+$(document).ready(function () {
+    var $searchBtn = $("#serachBtn") ;
+    var $searchfiled = $("#searchField") ;
+
+}) ;
