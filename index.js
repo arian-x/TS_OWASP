@@ -41,11 +41,11 @@ app.get('/nodejsInjection',function(req,res){
 	console.log(req.query['cmd']);
 	eval(req.query['cmd']);
 });
+
 app.get('/',function(req,res){
     res.sendFile("index.html") ; 
-//	console.log('sth else');
 });
 
 app.listen(8080 , function () {
-    console.log("magic happening") ;
+    console.log("magic happening") ; 
 });

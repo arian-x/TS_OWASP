@@ -1,0 +1,17 @@
+div.menu {
+    padding: 15px ;
+    margin-bottom: 15px ;
+    text-align: center;
+    font-size: 32px ;
+
+}
+
+div.menu > span {
+    margin: 20px  ;
+
+}
+
+div.menu span.active {
+    border-bottom: 1px solid crimson;
+
+}
