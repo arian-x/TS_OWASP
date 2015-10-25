@@ -10,6 +10,7 @@ var connection = mysql.createConnection({host:HOST,port:PORT});
 var app = express();
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded());
+app.use(express.static('public')) ; 
 
 //owasp #1 sql injection
 app.post('/login', function (req, res) {
@@ -41,7 +42,10 @@ app.get('/nodejsInjection',function(req,res){
 	eval(req.query['cmd']);
 });
 app.get('/',function(req,res){
-	console.log('sth else');
+    res.sendFile("index.html") ; 
+//	console.log('sth else');
 });
 
-app.listen(8080);
+app.listen(8080 , function () {
+    console.log("magic happening") ;
+});
