@@ -4,13 +4,26 @@ var morgan = require('morgan');
 var HOST = 'localhost';
 var PORT = 3306;
 var mysql      = require('mysql');
-var connection = mysql.createConnection({host:HOST,port:PORT});
+var connection = mysql.createConnection({host:HOST,port:PORT,database:'test'});
 var path = require('path');
 var jade = require('jade');
 var app = express();
 var fakeCookie = {'user':123456};
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded());
+var session = require('express-session');
+
+app.use(session({
+  secret: 'our super secret session secret',
+  cookie: {
+    maxAge: 3600000,
+    httpOnly: true
+  }
+}));
+//secure: true,
+//TO DO: CSRF,cookie http only,comment presistant injection
+//
+
 //app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
 //app.set('views', path.join(__dirname, 'views'));
@@ -55,8 +68,21 @@ app.get('/user',function(req,res){
 		};
 	});
 });
-
-
+app.post('/commet',function(req,res){
+	var comment = req.body.user;
+	var sql = "INSERT INTO comments VALUES ("+comment+");"
+	connection.query(sql, function(err, results) {
+		console.log(results);
+		res.json(results);
+	});
+});
+app.get('/comment',function(req,res){
+	var sql  = "SELECT * FROM comments";
+	connection.query(sql, function(err, results) {
+		console.log(results);
+		res.json(results);
+	});
+})
 //cmd=while(1){console.log(%22HACKED%22)}
 app.get('/nodejsInjection',function(req,res){
 	console.log(req.query['cmd']);
