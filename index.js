@@ -7,7 +7,9 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({host:HOST,port:PORT,database:'test'});
 var path = require('path');
 var jade = require('jade');
+var csrf = require('csurf');
 var app = express();
+
 var fakeCookie = {'user':123456};
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded());
@@ -20,9 +22,10 @@ app.use(session({
     httpOnly: true
   }
 }));
+app.use(csrf());
 //secure: true,
 //TO DO: CSRF,cookie http only,comment presistant injection
-//
+// test safe/comment
 
 //app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -72,6 +75,7 @@ app.post('/commet',function(req,res){
 	var comment = req.body.user;
 	var sql = "INSERT INTO comments VALUES ("+comment+");"
 	connection.query(sql, function(err, results) {
+		if (err) throw err;
 		console.log(results);
 		res.json(results);
 	});
@@ -79,10 +83,21 @@ app.post('/commet',function(req,res){
 app.get('/comment',function(req,res){
 	var sql  = "SELECT * FROM comments";
 	connection.query(sql, function(err, results) {
+		if (err) throw err;
 		console.log(results);
 		res.json(results);
 	});
 })
+app.post('/safe/comment',function(req,res){
+	var comment = req.body.user;
+	var sql = "INSERT INTO comments VALUES ("+comment+");"
+	connection.query(sql, function(err, results) {
+		if (err) throw err;
+		console.log(results);
+		res.json(results);
+	});
+});
+
 //cmd=while(1){console.log(%22HACKED%22)}
 app.get('/nodejsInjection',function(req,res){
 	console.log(req.query['cmd']);

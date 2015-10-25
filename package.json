@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "csrf": "^3.0.0",
+    "csurf": "^1.8.3",
     "express": "^4.13.3",
     "express-session": "^1.11.3",
     "morgan": "^1.6.1",
