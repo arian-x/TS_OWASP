@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<div class="alert alert-danger" id="tsAlert"> Fuck You - <span class="alert-close"> </span> </div>
+<div class="alert alert-danger" id="tsAlert"> Not Good - <span class="alert-close"> </span> </div>
 
 <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
@@ -162,30 +162,6 @@
                         <span class="badge badge-danger"> Non Presistante </span>
                     </div>
                     <button type="button" class="btn btn-warning info-btn" data-toggle="modal" data-target=".xssAttack">Attack Information</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col col-sm-12">
-            <h3> Safe Form <a style="font-size:14px" href="/unsafeform"> an Unsafe Example </a> </h3>  
-            <div class="panle panel-primary">
-                <div class="panel panel-body">
-                    <form method="POST" action="/" >
-                        <div class="forms-group">
-                            <label> Username </label>
-                            <input name="username" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label> Password </label>
-                            <input name="password" class="form-control" /> 
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-deafult" />
-                            <button type="button" class="btn btn-warning info-btn" data-toggle="modal" data-target=".csrfAttack">Attack Information</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

@@ -3,7 +3,8 @@ $(document).ready(function () {
     var url  ="/" ;
     var id = "" ;
     var user = "arian" ;
-
+    var csrf = null ; 
+    
     var $isSafe = $("#isSafe") ;
 
     $isSafe.change(function () {
@@ -33,6 +34,14 @@ $(document).ready(function () {
     var $safeMail = $("#safeEmail") ;
 
     var $tsAlert = $("#tsAlert") ;
+    
+    var getCSRF = function () {
+        $.get("/getCSRFToken"  ,function (data) {
+            csrf = data.csrf ; 
+        })
+    }
+    
+    getCSRF();
 
     $loginBtn.click(function () {
         $.post(url + "login" , { user : $userName.val() , pass : $password.val() }).done(function (data, status) {
@@ -60,11 +69,11 @@ $(document).ready(function () {
     }) ;
    
     $addComment.click(function () {
-        $.post(url + "comment" , { comment : $commentBody.val() } , function (data , status , x ) {
+        $.post(url + "comment" , { comment : $commentBody.val() , csrf : csrf } , function (data , status , x ) {
             if ( data.status ) {
 
             }
-            else {
+            else if ( url ) {
                 $tsAlert.addClass('show').html('Attack Detected ! ') ;
                 setTimeout(function () {
                     $tsAlert.removeClass('show')
