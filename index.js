@@ -146,6 +146,7 @@ app.get('/user',function(req,res){
 app.post('/comment',function(req,res){
 	if (req.body.csrf == lastCSRF){
 		var comment = req.body.comment;
+		console.log(comment);
 		var sql = "INSERT INTO comments VALUES ('"+comment+"')"
 		connection.query(sql, function(err, results) {
 			if (err) throw err;
@@ -153,6 +154,7 @@ app.post('/comment',function(req,res){
 			res.json(results);
 		});	
 	}else{
+		console.log("csrf problem");
 		res.json({status:'fail'});
 	}
 	
@@ -168,15 +170,34 @@ app.get('/comment',function(req,res){
 app.post('/safe/comment',function(req,res){
 	if(req.body.csrf == lastCSRF){
 		var firstComment = req.body.comment;
+		console.log("first: ",firstComment);
 		var comment = htmlEscape(firstComment);
+		console.log("script scaped: ",comment);
+		sqlEscapedComment = connection.escape(firstComment);
+		console.log("sqlscaped: ",sqlEscapedComment);
+		console.log(sqlEscapedComment == firstComment);
+		comment = connection.escape(comment);
+		console.log("both: ",comment);
 		var flag = true
 		if (firstComment != comment){
-			res.json({'status': false});
+			console.log("script injection");
+			var sql = "INSERT INTO comments VALUES ("+comment+")";
+			connection.query(sql, function(err, results) {
+				if (err) throw err;
+				console.log(results);
+				res.json({'status': false});
+			});
 		}
 		else {
-			res.json({status : true}) ;
+			var sql = "INSERT INTO comments VALUES ("+comment+")";
+			connection.query(sql, function(err, results) {
+				if (err) throw err;
+				console.log(results);
+				res.json({status : true}) ;
+			});
 		}	
 	}else{
+		console.log("csrf problem");
 		res.json({status:'fail'});
 	}
 	
