@@ -4,7 +4,7 @@ $(document).ready(function () {
     var id = "" ;
     var user = "arian" ;
     var csrf = null ; 
-    
+
     var $isSafe = $("#isSafe") ;
 
     $isSafe.change(function () {
@@ -34,13 +34,14 @@ $(document).ready(function () {
     var $safeMail = $("#safeEmail") ;
 
     var $tsAlert = $("#tsAlert") ;
-    
+
     var getCSRF = function () {
         $.get("/getCSRFToken"  ,function (data) {
             csrf = data.csrf ; 
+            $("#csrf").val(csrf);
         })
     }
-    
+
     getCSRF();
 
     $loginBtn.click(function () {
@@ -53,7 +54,6 @@ $(document).ready(function () {
 
     var renderComments = function () {
         $.get("/comment" , function (data) {
-            console.log(data) ;
             $comments.empty() ; 
             for ( var i = 0 ; i < data.length ; i++ ) {
                 $comments.append("<tr><td>" + data[i].body + "</td></tr>") ; 
@@ -67,21 +67,30 @@ $(document).ready(function () {
             $("#info").html(JSON.stringify(data)) ; 
         })
     }) ;
-   
+
     $addComment.click(function () {
         $.post(url + "comment" , { comment : $commentBody.val() , csrf : csrf } , function (data , status , x ) {
-            if ( data.status ) {
+            if ( url.length > 1  ) {
+                if ( data.status ) {
 
-            }
-            else if ( url ) {
-                $tsAlert.addClass('show').html('Attack Detected ! ') ;
-                setTimeout(function () {
-                    $tsAlert.removeClass('show')
-                } , 3000 ) ;
+                }
+                else {
+                    $tsAlert.addClass('show').html('Attack Detected ! ') ;
+                    setTimeout(function () {
+                        $tsAlert.removeClass('show')
+                    } , 3000 ) ;
+                }
             }
             renderComments();
         })
     }) ;
+
+    $("#unsafeAddComment").click(function () {
+        $tsAlert.addClass('show').html('CSRF Not Recognized') ;
+        setTimeout(function () {
+            $tsAlert.removeClass('show')
+        } , 3000 ) ;
+    })
 
     $mail.click(function () {
         $.get('/getEmail?user=' + user  , function (data) {
