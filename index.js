@@ -86,9 +86,6 @@ app.post('/injection', function (req, res) {
 
 });
 app.get('/getEmail',function(req,res){
-
-
-	
 	
 	console.log(req.session); 
 	var user = connection.escape(req.query['user']);
@@ -187,14 +184,18 @@ app.get('/xss/*',function(req,res){
 	var fileName = urlArray[urlArray.length - 1 ];
 	//res.render('error', { name: fileName });
 });
+
 app.get('/',function(req,res){
-	
     res.sendFile("index.html"); 
     //var html = jade.renderFile('index.jade',{});
 		//res.send(html);
     //console.log('sth else');
-    //res.render('index', { title: 'Express' });
+//    res.render('indexx', { title: 'Express' });
 });
+
+app.get("/unsafeform" , function (req , resp) {
+    resp.sendFile(__dirname + "/public/unsafe.html");
+}) ; 
 
 app.listen(8080 , function () {
     console.log("magic happening") ;

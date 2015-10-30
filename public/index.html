@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
 
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/Bootflat/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
 </head>
 
@@ -23,6 +24,49 @@
     </div>
 </nav>
 
+
+<div class="modal fade AuthAttack" tabindex="-1" role="dialog" aria-labelledby="modal1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="jumbotrons" style="padding : 25px;">
+            <h1> Broken Auth Attack </h1> <span class="badge badge-danger"> Attack rank 1 </span>
+            <hr>
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsfs
+        </div>
+    </div>
+  </div>
+</div>
+    
+<div class="modal fade xssAttack" tabindex="-2" role="dialog" aria-labelledby="modal2">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="jumbotrons" style="padding : 25px;">
+            <h1> XSS Attack </h1> <span class="badge badge-danger"> Attack rank 1 </span>
+            <hr>
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsfs
+        </div>
+    </div>
+  </div>
+</div>
+    
+    
+    
 <div class="container">
     <p> Safe : <input type="checkbox" id="isSafe"> </p>
     <div class="jumbotron">
@@ -40,6 +84,7 @@
             </div>
             <div class="form-group">
                 <button id="loginBtn" class="btn btn-success"> Login </button>
+                <button type="button" class="btn btn-warning info-btn" data-toggle="modal" data-target=".AuthAttack">Attack Information</button>
             </div>
             <span id="link" class="hide badge badge-success"> Show User Info </span>
             <p id="info"> User Info </p>
@@ -93,12 +138,36 @@
                         <button id="addComment" class="btn btn-success"> Add Row</button>
                         <span class="badge badge-danger"> Non Presistante </span>
                     </div>
-
+                    <button type="button" class="btn btn-warning info-btn" data-toggle="modal" data-target=".xssAttack">Attack Information</button>
                 </div>
             </div>
         </div>
     </div>
     <hr>
+    <div class="row">
+        <div class="col col-sm-12">
+            <h3> Safe Form <a style="font-size:14px" href="/unsafeform"> an Unsafe Example </a> </h3>  
+            <div class="panle panel-primary">
+                <div class="panel panel-body">
+                    <form method="POST" action="/" >
+                        <div class="forms-group">
+                            <label> Username </label>
+                            <input name="username" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label> Password </label>
+                            <input name="password" class="form-control" /> 
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-deafult" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    
     <div class="row">
         <div class="col col-sm-6">
             <div class="jumbotron" style="height: 300px">
