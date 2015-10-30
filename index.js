@@ -10,6 +10,8 @@ var connection = mysql.createConnection({host:HOST,port:PORT,database:'test'});
 var path = require('path');
 var jade = require('jade');
 var csrf = require('csurf');
+var uuid = require('uuid');
+var lastCSRF = '';
 var app = express();
 var cookieJar = {};
 var fakeCookie = {'arian':123456};
@@ -64,6 +66,11 @@ function htmlEscape(text) {
      replace(/</g, '&lt;').  // it's not neccessary to escape >
      replace(/"/g, '&quot;').
      replace(/'/g, '&#039;');
+}
+function detectInjection(text){
+	var regex = /\w*((\%27)|(\'))((\%6F)|o|(\%4F))((\%72)|r|(\%52))/i;
+	var result = regex.test(text);
+	return result;
 }
 app.get('/usecsrf',function(req,res){
 	app.use(csrf());
@@ -137,13 +144,18 @@ app.get('/user',function(req,res){
 	});
 });
 app.post('/comment',function(req,res){
-	var comment = req.body.comment;
-	var sql = "INSERT INTO comments VALUES ('"+comment+"')"
-	connection.query(sql, function(err, results) {
-		if (err) throw err;
-		console.log(results);
-		res.json(results);
-	});
+	if (req.body.csrf == lastCSRF){
+		var comment = req.body.comment;
+		var sql = "INSERT INTO comments VALUES ('"+comment+"')"
+		connection.query(sql, function(err, results) {
+			if (err) throw err;
+			console.log(results);
+			res.json(results);
+		});	
+	}else{
+		res.json({status:'fail'});
+	}
+	
 });
 app.get('/comment',function(req,res){
 	var sql  = "SELECT * FROM comments";
@@ -154,15 +166,20 @@ app.get('/comment',function(req,res){
 	});
 }) ;
 app.post('/safe/comment',function(req,res){
-	var firstComment = req.body.comment;
-	var comment = htmlEscape(firstComment);
-	var flag = true
-	if (firstComment != comment){
-		res.json({'status': false});
+	if(req.body.csrf == lastCSRF){
+		var firstComment = req.body.comment;
+		var comment = htmlEscape(firstComment);
+		var flag = true
+		if (firstComment != comment){
+			res.json({'status': false});
+		}
+		else {
+			res.json({status : true}) ;
+		}	
+	}else{
+		res.json({status:'fail'});
 	}
-	else {
-		res.json({status : true}) ;
-	}
+	
 	//comment = connection.escape(comment);
 	console.log("safe comment is: ",comment)
 	//var sql = "INSERT INTO comments VALUES ("+comment+")";
@@ -184,7 +201,12 @@ app.get('/xss/*',function(req,res){
 	var fileName = urlArray[urlArray.length - 1 ];
 	//res.render('error', { name: fileName });
 });
+app.get('/getCSRFToken',function(req,res){
+	lastCSRF = uuid.v1();
+	console.log(lastCSRF);
+	res.json({csrf:lastCSRF});
 
+});
 app.get('/',function(req,res){
     res.sendFile("index.html"); 
     //var html = jade.renderFile('index.jade',{});
