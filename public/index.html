@@ -86,9 +86,67 @@
 </div>
     
     
+<div class="modal fade secAttack" tabindex="-2" role="dialog" aria-labelledby="modal2">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="jumbotrons" style="padding : 25px;">
+            <h1> Security MisConfig </h1> <span class="badge badge-danger"> Attack rank 1 </span>
+            <hr>
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsfs
+        </div>
+    </div>
+  </div>
+</div>    
     
     
+<div class="modal fade csrfAttack" tabindex="-2" role="dialog" aria-labelledby="modal2">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="jumbotrons" style="padding : 25px;">
+            <h1> Sensetive Data Expo </h1> <span class="badge badge-danger"> Attack rank 1 </span>
+            <hr>
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsfs
+        </div>
+    </div>
+  </div>
+</div>    
     
+    
+<div class="modal fade sensAttack" tabindex="-2" role="dialog" aria-labelledby="modal2">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="jumbotrons" style="padding : 25px;">
+            <h1> Sensetive Data Expo </h1> <span class="badge badge-danger"> Attack rank 1 </span>
+            <hr>
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsf
+            Bsdfjsdfskdfskfjskdfjsdkfjsfkdsfs
+        </div>
+    </div>
+  </div>
+</div>        
     
 <div class="container">
     <p> Safe : <input type="checkbox" id="isSafe"> </p>
@@ -107,7 +165,7 @@
             </div>
             <div class="form-group">
                 <button id="loginBtn" class="btn btn-success"> Login </button>
-                <button type="button" class="btn btn-warning info-btn" data-toggle="modal" data-target=".AuthAttack">Attack Information</button>
+                <button type="button" class="btn btn-warning info-btn" data-toggle="modal" data-target=".AuthAttack"> Broken Auth Attack </button>
             </div>
             <span id="link" class="hide badge badge-success"> Show User Info </span>
             <p id="info"> User Info </p>
@@ -163,7 +221,12 @@
                         <button id="addComment" class="btn btn-success"> Add Row</button>
                         <span class="badge badge-danger"> Presistante </span>
                     </div>
-                    <button type="button" class="btn btn-warning info-btn" data-toggle="modal" data-target=".xssAttack">Attack Information</button>
+                    <hr>
+                    <button type="button" class="btn btn-small btn-warning" data-toggle="modal" data-target=".xssAttack">xss Information</button>
+                    <button class="btn btn-small btn-warning" data-toggle="modal" data-target=".sensAttack"> Sensetive Data Expo </button>
+                    <button class="btn btn-small btn-warning" data-toggle="modal" data-target=".secAttack"> Security Misconf </button>
+                    <button class="btn btn-small btn-warning" data-toggle="modal" data-target=".csrfAttack"> CSRF </button>
+<!--                    <button class="btn btn-small btn-warning" data-toggle="modal" data-target=".xssAttack">  </button>-->
                 </div>
             </div>
         </div>
